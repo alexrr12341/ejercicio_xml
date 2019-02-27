@@ -11,5 +11,5 @@
 
  ***Buscar información relacionada:*** Pedir nombre de habilidad de un campeón y decirte de que campeón se trata.
 
- ***Ejercicio libre:*** Pedir numero de ID del campeón y abrirte una página con una guía del campeón.
+ ***Ejercicio libre:*** Pedir nombre de ID del campeón y abrirte una página con una guía del campeón.
 
