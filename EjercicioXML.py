@@ -1,4 +1,5 @@
 from lxml import etree
+import webbrowser
 def listar_armadura(doc):
     lista=doc.xpath("//Champion/estadisticas/armorBase/text()")
     return lista
@@ -39,6 +40,19 @@ def pedirhabilidad(doc):
             print(champion)
     else:
         print("Esa habilidad no esta en nuestra base de datos.")
+
+def guiacampeon(doc):
+    campeon=str(input("Dime el campeon que esté en nuestra base de datos. "))
+    lista=doc.xpath("//Champion/name/text()")
+    for campeones in lista:
+         if campeon==campeones:
+            indicador=True
+    if indicador:
+        print("Campeon detectado.")
+        input("Pulse Enter para continuar.")
+        webbrowser.open_new("https://euw.op.gg/champion/%s"%campeon) 
+    else:
+        print("Este campeon no esta en nuestra base de datos.")
 opciones='''1.Listar Armaduras
 2.Contar Campeones
 3.Pedir Campeones y dar estadisticas
@@ -60,9 +74,7 @@ while opcion!=0:
     elif opcion==4:
         pedirhabilidad(doc)
     elif opcion==5:
-        localidad=str(input("Dime el nombre de la localidad. "))
-        for nombre in poblaciones(localidad,doc):
-            print(nombre)
+        guiacampeon(doc)
     elif opcion==0:
         print("Fin del programa.")
 
