@@ -1,7 +1,7 @@
 from lxml import etree
 def listar_armadura(doc):
-	lista=doc.xpath("//Champion/armorBase/text()")
-	return lista
+    lista=doc.xpath("//Champion/estadisticas/armorBase/text()")
+    return lista
 def contar_campeones(doc):
     lista=doc.xpath("count(//Champion/name/text())")
     return lista
@@ -18,10 +18,10 @@ def pediryestadisticas(doc):
         print("Campeon detectado.")
         input("Pulse Enter para continuar.")
         for var in listavar:
-            print(var)
+            print(var,end="")
             dic=doc.xpath("//Champion[name='%s']/estadisticas/%s/text()"%(campeon,var))
             for estadisticas in dic:
-                print(estadisticas)
+                print("-->",estadisticas)
     else:
         print("Ese campeon no esta en nuestra base de datos.")
 def pedirhabilidad(doc):
