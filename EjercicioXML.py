@@ -26,11 +26,19 @@ def pediryestadisticas(doc):
         print("Ese campeon no esta en nuestra base de datos.")
 def pedirhabilidad(doc):
     habilidad=str(input("Dime la habilidad. "))
-    lista=doc.xpath("//Champion//Ability/name/text()")
+    lista=doc.xpath("//Champion/abilities/Ability/name/text()")
+    indicador=False
     for habilidades in lista:
         if habilidad==habilidades:
-            print("Habilidad encontrada.")
-            print("El campeon es",doc.xpath("//Champion//Ability[name='']/../../name/text()")%habilidad)
+            indicador=True
+    if indicador:
+        print("Habilidad detectada.")
+        input("Presione Enter para averiguar de que campeon se trata.")
+        dic=doc.xpath("//Champion/abilities/Ability[name='%s']/../../name/text()"%habilidad)
+        for champion in dic:
+            print(champion)
+    else:
+        print("Esa habilidad no esta en nuestra base de datos.")
 opciones='''1.Listar Armaduras
 2.Contar Campeones
 3.Pedir Campeones y dar estadisticas
