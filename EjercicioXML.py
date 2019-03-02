@@ -8,17 +8,29 @@ def contar_campeones(doc):
 def pediryestadisticas(doc):
     indicador=False
     campeon=str(input("Dime el campeón que analizar. "))
+    listavar=['range','moveSpeed','armorBase','armorLevel','manaBase','manaLevel','criticalChanceBase','criticalChanceLevel','manaRegenBase','manaRegenLevel','healthRegenBase','healthRegenLevel','magicResistBase','magicResistLevel','healthBase','healthLevel','attackBase','attackLevel','ratingDefense','ratingMagic','ratingDifficulty','ratingAttack']
     lista=doc.xpath("//Champion/name/text()")
-    listaE=doc.xpath("//Champion/estadisticas")
+    listaE=doc.xpath("//Champion/estadisticas/range/text()")
     for campeones in lista:
         if campeon==campeones:
             indicador=True
     if indicador:
         print("Campeon detectado.")
         input("Pulse Enter para continuar.")
-        print(listaE)
+        for var in listavar:
+            print(var)
+            dic=doc.xpath("//Champion[name='%s']/estadisticas/%s/text()"%(campeon,var))
+            for estadisticas in dic:
+                print(estadisticas)
     else:
         print("Ese campeon no esta en nuestra base de datos.")
+def pedirhabilidad(doc):
+    habilidad=str(input("Dime la habilidad. "))
+    lista=doc.xpath("//Champion//Ability/name/text()")
+    for habilidades in lista:
+        if habilidad==habilidades:
+            print("Habilidad encontrada.")
+            print("El campeon es",doc.xpath("//Champion//Ability[name='']/../../name/text()")%habilidad)
 opciones='''1.Listar Armaduras
 2.Contar Campeones
 3.Pedir Campeones y dar estadisticas
@@ -38,9 +50,7 @@ while opcion!=0:
     elif opcion==3:
         pediryestadisticas(doc)
     elif opcion==4:
-        provincia=str(input("Dime el nombre de la provincia. "))
-        for nombre in poblaciones(provincia,doc):
-           print (nombre)
+        pedirhabilidad(doc)
     elif opcion==5:
         localidad=str(input("Dime el nombre de la localidad. "))
         for nombre in poblaciones(localidad,doc):
