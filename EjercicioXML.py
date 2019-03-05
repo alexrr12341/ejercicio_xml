@@ -71,8 +71,10 @@ while opcion!=0:
         print("Hay",int(contar_campeones(doc)),"campeones en nuestro documento.")
     elif opcion==3:
         pediryestadisticas(doc)
+        #Ejemplo Darius,Ziggs,Anivia
     elif opcion==4:
         pedirhabilidad(doc)
+        #Ejemplo Spinning Axe,Courage,Quickdraw
     elif opcion==5:
         guiacampeon(doc)
     elif opcion==0:
