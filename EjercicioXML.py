@@ -1,8 +1,9 @@
 from lxml import etree
 import webbrowser
 def listar_armadura(doc):
+    listaC=doc.xpath("//Champion/name/text()")
     lista=doc.xpath("//Champion/estadisticas/armorBase/text()")
-    return lista
+    return zip(listaC,lista)
 def contar_campeones(doc):
     lista=doc.xpath("count(//Champion/name/text())")
     return lista
@@ -65,8 +66,8 @@ while opcion!=0:
     print(opciones)
     opcion=int(input("Dime la opción. "))
     if opcion==1:
-        for armadura in listar_armadura(doc):
-            print(armadura)
+        for listas in listar_armadura(doc):
+            print(listas[0],"--->",listas[1])
     elif opcion==2:
         print("Hay",int(contar_campeones(doc)),"campeones en nuestro documento.")
     elif opcion==3:
