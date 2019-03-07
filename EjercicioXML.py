@@ -14,14 +14,14 @@ def pediryestadisticas(doc,campeon):
     lista=doc.xpath("//Champion/name/text()")
     listaE=doc.xpath("//Champion/estadisticas/range/text()")
     for campeones in lista:
-        if campeon==campeones:
+        if campeon.upper()==campeones.upper():
             indicador=True
     if indicador:
         print("Campeon detectado.")
         input("Pulse Enter para continuar.")
         for var in listavar:
             print(var,end="")
-            dic=doc.xpath("//Champion[name='%s']/estadisticas/%s/text()"%(campeon,var))
+            dic=doc.xpath("//Champion[name='%s']/estadisticas/%s/text()"%(campeon.capitalize(),var))
             for estadisticas in dic:
                 print("-->",estadisticas)
     else:
@@ -30,14 +30,14 @@ def pedirhabilidad(doc,habilidad):
     lista=doc.xpath("//Champion/abilities/Ability/name/text()")
     indicador=False
     for habilidades in lista:
-        if habilidad==habilidades:
+        if habilidad.upper()==habilidades.upper():
             indicador=True
     if indicador:
         print("Habilidad detectada.")
         input("Presione Enter para averiguar de que campeon se trata.")
-        dic=doc.xpath("//Champion/abilities/Ability[name='%s']/../../name/text()"%habilidad)
+        dic=doc.xpath("//Champion/abilities/Ability[name='%s']/../../name/text()"%habilidad.capitalize())
         for champion in dic:
-            print(champion)
+            return champion
     else:
         print("Esa habilidad no esta en nuestra base de datos.")
 
@@ -45,12 +45,12 @@ def guiacampeon(doc,campeon):
     lista=doc.xpath("//Champion/name/text()")
     indicador=False
     for campeones in lista:
-         if campeon==campeones:
+         if campeon.upper()==campeones.upper():
             indicador=True
     if indicador:
         print("Campeon detectado.")
         input("Pulse Enter para continuar.")
-        webbrowser.open_new("https://euw.op.gg/champion/%s"%campeon)
+        webbrowser.open_new("https://euw.op.gg/champion/%s"%campeon.capitalize())
         system('echo "" && clear')
     else:
         print("Este campeon no esta en nuestra base de datos.")
@@ -80,7 +80,7 @@ while opcion!=0:
             #Ejemplo Darius,Ziggs,Anivia
         elif opcion==4:
             habilidad=str(input("Dime la habilidad. "))
-            pedirhabilidad(doc,habilidad)
+            print("El campeon es -->",pedirhabilidad(doc,habilidad))
             #Ejemplo Spinning Axe,Courage,Quickdraw
         elif opcion==5:
             campeon=str(input("Dime el campeon que esté en nuestra base de datos. "))
