@@ -1,5 +1,6 @@
 from lxml import etree
 import webbrowser
+from os import system
 def listar_armadura(doc):
     listaC=doc.xpath("//Champion/name/text()")
     lista=doc.xpath("//Champion/estadisticas/armorBase/text()")
@@ -7,9 +8,8 @@ def listar_armadura(doc):
 def contar_campeones(doc):
     lista=doc.xpath("count(//Champion/name/text())")
     return lista
-def pediryestadisticas(doc):
+def pediryestadisticas(doc,campeon):
     indicador=False
-    campeon=str(input("Dime el campeón que analizar. "))
     listavar=['range','moveSpeed','armorBase','armorLevel','manaBase','manaLevel','criticalChanceBase','criticalChanceLevel','manaRegenBase','manaRegenLevel','healthRegenBase','healthRegenLevel','magicResistBase','magicResistLevel','healthBase','healthLevel','attackBase','attackLevel','ratingDefense','ratingMagic','ratingDifficulty','ratingAttack']
     lista=doc.xpath("//Champion/name/text()")
     listaE=doc.xpath("//Champion/estadisticas/range/text()")
@@ -26,8 +26,7 @@ def pediryestadisticas(doc):
                 print("-->",estadisticas)
     else:
         print("Ese campeon no esta en nuestra base de datos.")
-def pedirhabilidad(doc):
-    habilidad=str(input("Dime la habilidad. "))
+def pedirhabilidad(doc,habilidad):
     lista=doc.xpath("//Champion/abilities/Ability/name/text()")
     indicador=False
     for habilidades in lista:
@@ -42,16 +41,17 @@ def pedirhabilidad(doc):
     else:
         print("Esa habilidad no esta en nuestra base de datos.")
 
-def guiacampeon(doc):
-    campeon=str(input("Dime el campeon que esté en nuestra base de datos. "))
+def guiacampeon(doc,campeon):
     lista=doc.xpath("//Champion/name/text()")
+    indicador=False
     for campeones in lista:
          if campeon==campeones:
             indicador=True
     if indicador:
         print("Campeon detectado.")
         input("Pulse Enter para continuar.")
-        webbrowser.open_new("https://euw.op.gg/champion/%s"%campeon) 
+        webbrowser.open_new("https://euw.op.gg/champion/%s"%campeon)
+        system('echo "" && clear')
     else:
         print("Este campeon no esta en nuestra base de datos.")
 opciones='''1.Listar Armaduras
@@ -64,20 +64,27 @@ doc=etree.parse('LeagueOfLegends.xml')
 opcion=int
 while opcion!=0:
     print(opciones)
-    opcion=int(input("Dime la opción. "))
-    if opcion==1:
-        for listas in listar_armadura(doc):
-            print(listas[0],"--->",listas[1])
-    elif opcion==2:
-        print("Hay",int(contar_campeones(doc)),"campeones en nuestro documento.")
-    elif opcion==3:
-        pediryestadisticas(doc)
-        #Ejemplo Darius,Ziggs,Anivia
-    elif opcion==4:
-        pedirhabilidad(doc)
-        #Ejemplo Spinning Axe,Courage,Quickdraw
-    elif opcion==5:
-        guiacampeon(doc)
-    elif opcion==0:
-        print("Fin del programa.")
+    try:
+        opcion=int(input("Dime la opción. "))
+    except:
+        print("Debes introducir un numero entero.")
+    else:
+        if opcion==1:
+            for listas in listar_armadura(doc):
+                print(listas[0],"--->",listas[1])
+        elif opcion==2:
+            print("Hay",int(contar_campeones(doc)),"campeones en nuestro documento.")
+        elif opcion==3:
+            campeon=str(input("Dime el campeón que analizar. "))
+            pediryestadisticas(doc,campeon)
+            #Ejemplo Darius,Ziggs,Anivia
+        elif opcion==4:
+            habilidad=str(input("Dime la habilidad. "))
+            pedirhabilidad(doc,habilidad)
+            #Ejemplo Spinning Axe,Courage,Quickdraw
+        elif opcion==5:
+            campeon=str(input("Dime el campeon que esté en nuestra base de datos. "))
+            guiacampeon(doc,campeon)
+        elif opcion==0:
+            print("Fin del programa.")
 
